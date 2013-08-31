@@ -104,6 +104,7 @@ var page_rank = function (graph) {
         //console.log(diff);
     }
     //console.log("end");
+    return rank_value;
 };
 
 var exploit_rank = function (graph) {
@@ -176,6 +177,147 @@ graph = [
     [0, 0, 0, 0, 0, 0, 0]
 ];
 */
+
+// Generate graph 64 nodes
+function draw_graph(graph,rank) {
+  var str = 'digraph G {\n';
+  str+= '   node [shape=circle,width=.25,height=.25,fixedsize=true,fontsize=10];\n';
+  str+= '   edge [arrowhead="vee",arrowsize=.5];\n';
+  for(var i=0;i<graph.length;i++) {
+    for(var j=0;j<graph[i].length;j++) {
+      var order = -1;
+      if(graph[i][j]>0 || graph[j][i]) {
+        for(var k=0;k<rank.length;k++) {
+          if(rank[k]==i) {
+            order = k;
+          }
+        }
+        str+= '   s'+i+' [label=\"'+order+'\"];\n';
+        break;
+      }
+    }
+  }
+
+  for(var i=0;i<graph.length;i++) {
+    for(var j=0;j<graph[i].length;j++) {
+      if(graph[i][j]>0) {
+        str+='   s'+i+' -> s'+j+';\n';
+      //  str+='   s'+i+' -> s'+j+' [label=\"'+graph[i][j]+'\"];\n';
+      }
+    }
+  }
+  str+='}\n';
+  return str;
+};
+
+function add_link(graph,src,dst_list) {
+  for(var i=0;i<dst_list.length;i++) {
+   // graph[src][dst_list[i]] = Math.floor(Math.random() * 90 + 10)/100;
+    graph[src][dst_list[i]] = 1;
+  }
+}
+
+function m_link(graph,src,dst,weight) {
+  graph[src][dst] = weight;
+}
+
+var graph = [];
+var node_size = 65;
+for(var i=0;i<node_size;i++) {
+  var tmp = []; 
+  for(var j=0;j<node_size;j++) {
+    tmp.push(0);
+  }
+  graph.push(tmp);
+}
+
+add_link(graph,0,[1,2,3]);
+add_link(graph,1,[4,5,8]);
+add_link(graph,2,[6,7,10]);
+add_link(graph,3,[9,11,12]);
+add_link(graph,4,[13,14,15,16,18]);
+add_link(graph,5,[17,20,22]);
+add_link(graph,6,[17,20,22]);
+add_link(graph,7,[21]);
+add_link(graph,8,[19,23,24,26]);
+add_link(graph,9,[19,23,24,26]);
+add_link(graph,10,[25]);
+add_link(graph,11,[25]);
+add_link(graph,12,[25]);
+add_link(graph,13,[27,28,31]);
+add_link(graph,14,[27,28,31]);
+add_link(graph,15,[29,30,34,35,36]);
+add_link(graph,16,[29,30,34,35,36]);
+add_link(graph,17,[29,30,34,35,36]);
+add_link(graph,18,[32,33,37,38,39]);
+add_link(graph,19,[32,33,37,38,39]);
+add_link(graph,20,[40,41]);
+add_link(graph,21,[40,41]);
+add_link(graph,22,[41,44]);
+add_link(graph,23,[41,44]);
+add_link(graph,24,[41,44]);
+add_link(graph,25,[41,44]);
+add_link(graph,26,[42,43,45,46,47]);
+add_link(graph,27,[48,49,50]);
+add_link(graph,28,[48,49,50]);
+add_link(graph,29,[48,49,50]);
+add_link(graph,30,[48,49,50]);
+add_link(graph,31,[51,52,53]);
+add_link(graph,32,[51,52,53]);
+add_link(graph,33,[51,52,53]);
+add_link(graph,34,[54,55]);
+add_link(graph,35,[54,55]);
+add_link(graph,36,[54,55]);
+add_link(graph,37,[54,55]);
+add_link(graph,38,[54,55]);
+add_link(graph,39,[54,55]);
+add_link(graph,40,[54,55]);
+add_link(graph,41,[54,55]);
+add_link(graph,42,[56,57,58]);
+add_link(graph,43,[56,57,58]);
+add_link(graph,44,[59,60]);
+add_link(graph,45,[59,60]);
+add_link(graph,46,[59,60]);
+add_link(graph,47,[59,60]);
+add_link(graph,48,[48]);
+add_link(graph,49,[49]);
+add_link(graph,50,[50]);
+add_link(graph,51,[51]);
+add_link(graph,52,[52]);
+add_link(graph,53,[53]);
+add_link(graph,54,[61]);
+add_link(graph,55,[62]);
+add_link(graph,56,[56]);
+add_link(graph,57,[57]);
+add_link(graph,58,[58]);
+add_link(graph,59,[63]);
+add_link(graph,60,[64]);
+add_link(graph,61,[61]);
+add_link(graph,62,[62]);
+add_link(graph,63,[63]);
+add_link(graph,64,[64]);
+
+var rank_value = page_rank(graph);
+//console.log(rank_value);
+var rank_order = [];
+var idx = -1;
+for(var i=0;i<rank_value.length;i++) {
+  var idx = -1;
+  var max = 0;
+  for(var j=0;j<rank_value.length;j++) {
+    if(rank_value[j]>max) {
+      max=rank_value[j];
+      idx=j;
+    }
+  }
+  rank_order.push(idx);
+  rank_value[idx]=0;
+}
+
+//console.log(rank_order);
+console.log(draw_graph(graph,rank_order));
+
+/*
 var iteration = 10;
 var time_p = 0.0;
 var time_e = 0.0;
@@ -195,3 +337,4 @@ for (var i = 0; i < iteration; i++) {
 }
 console.log("PageRank-based "+time_p/iteration);
 console.log("Exploit-based "+time_e/iteration);
+*/
