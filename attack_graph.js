@@ -75,12 +75,20 @@ var page_rank = function (graph) {
     for (var i = 0; i < graph.length; i++) {
         rank_value.push(1 / graph.length);
         var tmp = 0.0;
+        var divider = 0.0;
         for (var j = 0; j < graph[i].length; j++) {
             tmp += graph[i][j];
+            if(graph[i][j]>0) {
+               divider+=1;
+            }
         }
         graph_sum.push(tmp);
         // console.log(' d('+i+') = '+(tmp/graph.length));
-        graph_d.push(tmp/graph.length);
+        if(divider==0) {
+           graph_d.push(0);
+        } else {
+           graph_d.push(tmp/divider);
+        }
     }
     var diff = 1.0;
     while (diff > page_rank_diff) {
