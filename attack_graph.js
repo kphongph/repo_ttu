@@ -71,6 +71,7 @@ var gen_graph = function (total_node) {
 var page_rank = function (graph) {
     var rank_value = [];
     var graph_sum = [];
+    var graph_d = [];
     for (var i = 0; i < graph.length; i++) {
         rank_value.push(1 / graph.length);
         var tmp = 0.0;
@@ -78,23 +79,30 @@ var page_rank = function (graph) {
             tmp += graph[i][j];
         }
         graph_sum.push(tmp);
+        // console.log(' d('+i+') = '+(tmp/graph.length));
+        graph_d.push(tmp/graph.length);
     }
     var diff = 1.0;
     while (diff > page_rank_diff) {
         var new_rank_value = [];
         for (var i = 0; i < rank_value.length; i++) {
-            var tmp = 0.0;
+            new_rank_value.push(0.0);
+        }
+        for (var i = 1; i < rank_value.length; i++) {
             for (var j = 0; j < graph.length; j++) {
                 if (graph_sum[j] != 0) {
-                    tmp += page_rank_d * graph[j][i] * rank_value[j] / graph_sum[j];
+                 //   tmp += page_rank_d * graph[j][i] * rank_value[j] / graph_sum[j];
+                   new_rank_value[i] += graph_d[j] * graph[j][i] * rank_value[j] / graph_sum[j];
                 }
             }
+            new_rank_value[0] += (1-graph_d[i])*rank_value[i];
+            /*
             if (graph_sum[i] == 0) {
-                tmp += page_rank_d * rank_value[i];
+                tmp += page_rank_d * rank_value[i]; // self-loop
             }
-            new_rank_value.push(tmp);
+            */
         }
-        new_rank_value[0] = 1 - page_rank_d;
+        // new_rank_value[0] = 1 - page_rank_d;
         diff = 0.0;
         for (var i = 0; i < rank_value.length; i++) {
             //    console.log("Rank value "+i+" :"+new_rank_value[i]);
@@ -201,8 +209,17 @@ function draw_graph(graph,rank) {
   for(var i=0;i<graph.length;i++) {
     for(var j=0;j<graph[i].length;j++) {
       if(graph[i][j]>0) {
-        str+='   s'+i+' -> s'+j+';\n';
+      //  str+='   s'+i+' -> s'+j+';\n';
       //  str+='   s'+i+' -> s'+j+' [label=\"'+graph[i][j]+'\"];\n';
+        if(graph[i][j]==0.1) {
+          str+='   s'+i+' -> s'+j+' [color=\"red\"];\n';
+        }
+        if(graph[i][j]==0.3) {
+          str+='   s'+i+' -> s'+j+' [color=\"yellow\"];\n';
+        }
+        if(graph[i][j]==0.7) {
+          str+='   s'+i+' -> s'+j+' [color=\"green\"];\n';
+        }
       }
     }
   }
@@ -212,8 +229,19 @@ function draw_graph(graph,rank) {
 
 function add_link(graph,src,dst_list) {
   for(var i=0;i<dst_list.length;i++) {
+
    // graph[src][dst_list[i]] = Math.floor(Math.random() * 90 + 10)/100;
-    graph[src][dst_list[i]] = 1;
+   // graph[src][dst_list[i]] = 1;
+   var r=Math.random();
+   if(r < 0.3) {
+     graph[src][dst_list[i]] = 0.1;
+   } else {
+     if(r < 0.7) {
+       graph[src][dst_list[i]] = 0.3;
+     } else {
+       graph[src][dst_list[i]] = 0.7;
+     }
+   } 
   }
 }
 
@@ -279,6 +307,7 @@ add_link(graph,44,[59,60]);
 add_link(graph,45,[59,60]);
 add_link(graph,46,[59,60]);
 add_link(graph,47,[59,60]);
+/*
 add_link(graph,48,[48]);
 add_link(graph,49,[49]);
 add_link(graph,50,[50]);
@@ -296,6 +325,7 @@ add_link(graph,61,[61]);
 add_link(graph,62,[62]);
 add_link(graph,63,[63]);
 add_link(graph,64,[64]);
+*/
 
 var rank_value = page_rank(graph);
 //console.log(rank_value);
