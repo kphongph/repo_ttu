@@ -87,7 +87,7 @@ var page_rank = function (graph) {
         if(divider==0) {
            graph_d.push(0);
         } else {
-           graph_d.push(tmp/divider);
+           graph_d.push(1.0*tmp/divider);
         }
     }
     var diff = 1.0;
@@ -315,6 +315,12 @@ add_link(graph,44,[59,60]);
 add_link(graph,45,[59,60]);
 add_link(graph,46,[59,60]);
 add_link(graph,47,[59,60]);
+
+add_link(graph,54,[61]);
+add_link(graph,55,[62]);
+add_link(graph,59,[63]);
+add_link(graph,60,[64]);
+
 /*
 add_link(graph,48,[48]);
 add_link(graph,49,[49]);
@@ -322,13 +328,9 @@ add_link(graph,50,[50]);
 add_link(graph,51,[51]);
 add_link(graph,52,[52]);
 add_link(graph,53,[53]);
-add_link(graph,54,[61]);
-add_link(graph,55,[62]);
 add_link(graph,56,[56]);
 add_link(graph,57,[57]);
 add_link(graph,58,[58]);
-add_link(graph,59,[63]);
-add_link(graph,60,[64]);
 add_link(graph,61,[61]);
 add_link(graph,62,[62]);
 add_link(graph,63,[63]);
