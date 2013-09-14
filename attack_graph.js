@@ -2,7 +2,6 @@ var link_exists = 0.5;
 var page_rank_d = 0.85;
 var page_rank_diff = 0.00001;
 var link_factor = 0.5;
-var total_node = 2048;
 
 var make_attack_graph = function (graph) {
     var visited = [];
@@ -22,9 +21,11 @@ var make_attack_graph = function (graph) {
             }
         }
         waiting = new_waiting;
+        /*
         if(visited.length == graph.length) {
           console.log("Visited - " + visited.length);
         }
+        */
     }
 }
 
@@ -64,7 +65,7 @@ var gen_graph = function (total_node) {
         }
       }
     }
-    console.log('#edge '+count_link);
+    // console.log('#edge '+count_link);
     return node_list;
 };
 
@@ -73,22 +74,23 @@ var page_rank = function (graph) {
     var graph_sum = [];
     var graph_d = [];
     for (var i = 0; i < graph.length; i++) {
-        rank_value.push(1 / graph.length);
+        rank_value.push(1.0/graph.length);
         var tmp = 0.0;
-        var divider = 0.0;
+        // var divider = 0.0;
         for (var j = 0; j < graph[i].length; j++) {
             tmp += graph[i][j];
-            if(graph[i][j]>0) {
-               divider+=1;
-            }
+        //    if(graph[i][j]>0) {
+        //       divider+=1;
+        //    }
         }
         graph_sum.push(tmp);
         // console.log(' d('+i+') = '+(tmp/graph.length));
-        if(divider==0) {
-           graph_d.push(0);
-        } else {
-           graph_d.push(1.0*tmp/divider);
-        }
+        //if(divider==0) {
+        //   graph_d.push(0);
+        // } else {
+        //   graph_d.push(1.0*tmp/divider);
+        //}
+        graph_d.push(page_rank_d);
     }
     var diff = 1.0;
     while (diff > page_rank_diff) {
@@ -98,28 +100,28 @@ var page_rank = function (graph) {
         }
         for (var i = 1; i < rank_value.length; i++) {
             for (var j = 0; j < graph.length; j++) {
-                if (graph_sum[j] != 0) {
+                if (graph_sum[j] != 0 && graph[j][i]!=0) {
                  //   tmp += page_rank_d * graph[j][i] * rank_value[j] / graph_sum[j];
-                   new_rank_value[i] += graph_d[j] * graph[j][i] * rank_value[j] / graph_sum[j];
+                   new_rank_value[i] += 1.0*graph_d[j] * graph[j][i] * rank_value[j] / graph_sum[j];
+                 //  console.log('new_rank_'+i+'=1.0*'+graph_d[j]+'*'+graph[j][i]+'*'+rank_value[j]+'/'+graph_sum[j]);
                 }
             }
-            new_rank_value[0] += (1-graph_d[i])*rank_value[i];
-            /*
             if (graph_sum[i] == 0) {
-                tmp += page_rank_d * rank_value[i]; // self-loop
+                new_rank_value[i] += 1.0*graph_d[i]*rank_value[i]; // self-loop
+            //    console.log('new_rank_'+i+'=1.0*'+graph_d[i]+'*'+rank_value[i]);
             }
-            */
+            new_rank_value[0] += 1.0*(1-graph_d[i])*rank_value[i];
         }
-        // new_rank_value[0] = 1 - page_rank_d;
+        new_rank_value[0] += (1-graph_d[0])*rank_value[0];
         diff = 0.0;
+        // var sum_rank = 0.0;
         for (var i = 0; i < rank_value.length; i++) {
-            //    console.log("Rank value "+i+" :"+new_rank_value[i]);
+        //    console.log("Rank value "+i+" :"+new_rank_value[i]);
             diff += Math.abs(rank_value[i] - new_rank_value[i]);
             rank_value[i] = new_rank_value[i];
+        //    sum_rank+=rank_value[i];
         }
-        //console.log(diff);
     }
-    //console.log("end");
     return rank_value;
 };
 
@@ -164,35 +166,8 @@ var exploit_rank = function (graph) {
             }
         }
     }
-
-    /*
-    for (var i = 0; i < graph.length; i++) {
-        var str = "
-                            " + i + ": (" + path[i]["
-                            v "] + ", " + path[i]["
-                            l "] + ", [";
-        for (var j = 0; j < path[i]["
-                            p "].length; j++) {
-            str += path[i]["
-                            p "][j] + ", ";
-        }
-        str += "])";
-        console.log(str);
-    }
-    */
 };
 
-/*
-graph = [
-    [0, 4.3, 7.5, 4.3, 0, 0, 0],
-    [0, 0, 7.5, 0, 0, 0, 0],
-    [0, 0, 0, 0, 4.3, 0, 0],
-    [0, 0, 0, 0, 0, 7.5, 0],
-    [0, 0, 0, 0, 0, 7.5, 0],
-    [0, 0, 0, 0, 0, 0, 5.0],
-    [0, 0, 0, 0, 0, 0, 0]
-];
-*/
 
 // Generate graph 64 nodes
 function draw_graph(graph,rank) {
@@ -228,6 +203,10 @@ function draw_graph(graph,rank) {
         if(graph[i][j]==0.7) {
           str+='   s'+i+' -> s'+j+' [color=\"green\"];\n';
         }
+        if(graph[i][j]==1.0) {
+          str+='   s'+i+' -> s'+j+' [color=\"black\"];\n';
+        }
+       
       }
     }
   }
@@ -239,7 +218,8 @@ function add_link(graph,src,dst_list) {
   for(var i=0;i<dst_list.length;i++) {
 
    // graph[src][dst_list[i]] = Math.floor(Math.random() * 90 + 10)/100;
-   // graph[src][dst_list[i]] = 1;
+    graph[src][dst_list[i]] = 1;
+   /*
    var r=Math.random();
    if(r < 0.3) {
      graph[src][dst_list[i]] = 0.1;
@@ -250,6 +230,7 @@ function add_link(graph,src,dst_list) {
        graph[src][dst_list[i]] = 0.7;
      }
    } 
+   */
   }
 }
 
@@ -257,6 +238,7 @@ function m_link(graph,src,dst,weight) {
   graph[src][dst] = weight;
 }
 
+/*
 var graph = [];
 var node_size = 65;
 for(var i=0;i<node_size;i++) {
@@ -321,7 +303,6 @@ add_link(graph,55,[62]);
 add_link(graph,59,[63]);
 add_link(graph,60,[64]);
 
-/*
 add_link(graph,48,[48]);
 add_link(graph,49,[49]);
 add_link(graph,50,[50]);
@@ -335,7 +316,21 @@ add_link(graph,61,[61]);
 add_link(graph,62,[62]);
 add_link(graph,63,[63]);
 add_link(graph,64,[64]);
-*/
+
+m_link(graph,48,48,1.0);
+m_link(graph,49,49,1.0);
+m_link(graph,50,50,1.0);
+m_link(graph,51,51,1.0);
+m_link(graph,52,52,1.0);
+m_link(graph,53,53,1.0);
+m_link(graph,56,56,1.0);
+m_link(graph,57,57,1.0);
+m_link(graph,58,58,1.0);
+m_link(graph,61,61,1.0);
+m_link(graph,62,62,1.0);
+m_link(graph,63,63,1.0);
+m_link(graph,64,64,1.0);
+
 
 var rank_value = page_rank(graph);
 //console.log(rank_value);
@@ -354,13 +349,27 @@ for(var i=0;i<rank_value.length;i++) {
   rank_value[idx]=0;
 }
 
-//console.log(rank_order);
 console.log(draw_graph(graph,rank_order));
+*/
 
-/*
 var iteration = 10;
 var time_p = 0.0;
 var time_e = 0.0;
+var total_node = 10;
+
+/*
+graph = [
+    [0, 4.3, 7.5, 4.3, 0, 0, 0],
+    [0, 0, 7.5, 0, 0, 0, 0],
+    [0, 0, 0, 0, 4.3, 0, 0],
+    [0, 0, 0, 0, 0, 7.5, 0],
+    [0, 0, 0, 0, 0, 7.5, 0],
+    [0, 0, 0, 0, 0, 0, 5.0],
+    [0, 0, 0, 0, 0, 0, 0]
+];
+console.log(page_rank(graph));
+*/
+
 for (var i = 0; i < iteration; i++) {
     var graph = gen_graph(total_node);
     make_attack_graph(graph);
@@ -369,12 +378,11 @@ for (var i = 0; i < iteration; i++) {
     page_rank(graph);
     var e_time = (new Date()).getTime();
     time_p+= (e_time - s_time);    
-
-    s_time = (new Date()).getTime();
-    exploit_rank(graph);
-    e_time = (new Date()).getTime();
-    time_e+= (e_time - s_time);
+    // s_time = (new Date()).getTime();
+    // exploit_rank(graph);
+    // e_time = (new Date()).getTime();
+    // time_e+= (e_time - s_time);
 }
+
 console.log("PageRank-based "+time_p/iteration);
-console.log("Exploit-based "+time_e/iteration);
-*/
+// console.log("Exploit-based "+time_e/iteration);
