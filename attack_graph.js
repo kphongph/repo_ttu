@@ -352,11 +352,6 @@ for(var i=0;i<rank_value.length;i++) {
 console.log(draw_graph(graph,rank_order));
 */
 
-var iteration = 10;
-var time_p = 0.0;
-var time_e = 0.0;
-var total_node = 10;
-
 /*
 graph = [
     [0, 4.3, 7.5, 4.3, 0, 0, 0],
@@ -370,10 +365,24 @@ graph = [
 console.log(page_rank(graph));
 */
 
-for (var i = 0; i < iteration; i++) {
+var iteration = 10;
+var time_p = 0.0;
+var time_e = 0.0;
+
+var total_node_start = parseInt(process.argv[2])||10;
+var total_node_size = parseInt(process.argv[3])||3;
+var total_node_list = [];
+for(var i=0;i<total_node_size;i++) {
+  total_node_list.push(total_node_start);
+  total_node_start+=2;
+}
+
+//console.log(total_node);
+for(var j=0;j<total_node_list.length;j++) {
+  var total_node = total_node_list[j];
+  for (var i = 0; i < iteration; i++) {
     var graph = gen_graph(total_node);
     make_attack_graph(graph);
-    
     var s_time = (new Date()).getTime();
     page_rank(graph);
     var e_time = (new Date()).getTime();
@@ -382,7 +391,8 @@ for (var i = 0; i < iteration; i++) {
     // exploit_rank(graph);
     // e_time = (new Date()).getTime();
     // time_e+= (e_time - s_time);
+  }
+  var graph_size = total_node + total_node*total_node/2;
+  console.log(graph_size+'\t'+time_p/iteration);
 }
-
-console.log("PageRank-based "+time_p/iteration);
 // console.log("Exploit-based "+time_e/iteration);
