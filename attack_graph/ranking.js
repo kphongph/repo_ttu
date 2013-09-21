@@ -39,6 +39,7 @@ var page_rank = function (graph) {
       diff+=Math.abs(rank_value[i]-new_rank_value[i]);
       rank_value[i]=new_rank_value[i];
     }
+    iteration++;
     // console.log(diff);
   }
 
@@ -48,6 +49,7 @@ var page_rank = function (graph) {
   }
 
   // console.log(sum_rank);
+  // console.log(iteration);
   // console.log(rank_value);
   return rank_value;
 };

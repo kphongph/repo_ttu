@@ -28,16 +28,19 @@ var data_size = parseInt(process.argv[3])||10;
 var iteration = 10;
 
 for(var j=0;j<data_size;j++) {
-  var sum_time = 0;
+  var sum_time=[0,0];
   for(var i=0;i<iteration;i++) {
     var graph = ag_graph.generate_ag(node_size);
     var n_graph = modify_graph(graph.graph);
-    var s_time = (new Date()).getTime();
+    var s_time = process.hrtime();
     ranking.page_rank(n_graph);
-    var e_time = (new Date()).getTime();
-    sum_time += e_time-s_time;
+    var e_time = process.hrtime(s_time);
+    sum_time[0]+=e_time[0];
+    sum_time[1]+=e_time[1];
+  //  console.log('s_time '+sum_time);
   }
-  console.log(node_size+'\t'+(node_size*node_size/2)+'\t'+(sum_time/iteration));
+  var time = sum_time[0]*1000 + sum_time[1]/100000;
+  console.log(node_size+'\t'+(node_size*node_size/2)+'\t'+time.toFixed(3));
   node_size+=2;
 }
 
