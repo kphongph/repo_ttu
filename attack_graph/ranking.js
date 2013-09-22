@@ -40,7 +40,7 @@ var page_rank = function (graph) {
       rank_value[i]=new_rank_value[i];
     }
     iteration++;
-    // console.log(diff);
+    // console.log(iteration+'\t'+diff.toFixed(5));
   }
 
   var sum_rank = 0.0;
@@ -57,19 +57,34 @@ var page_rank = function (graph) {
 
 var rank_order = function(rank_value) {
   var order = [];
+  var c_order = 0;
+  for(var i=0;i<rank_value.length;i++) {
+    order.push(0);
+  }
   for(var i=0;i<rank_value.length;i++) {
     var idx = -1;
-    var max = 0;
+    var max = -1;
+    var order_list = [];
     for(var j=0;j<rank_value.length;j++) {
-      if(rank_value[j]>max) {
+      if(rank_value[j]>0 && rank_value[j] > max) {
         max=rank_value[j];
-        idx=j;
+        order_list = [];
+        order_list.push(j);
+      } else {
+        if(rank_value[j] == max) {
+          order_list.push(j);
+        }
       }
     }
-    rank_order.push(idx);
-    rank_value[idx]=0;
+    for(var j=0;j<order_list.length;j++) {
+       rank_value[order_list[j]] = 0;
+       order[order_list[j]] = c_order;
+    }
+    c_order+=order_list.length;
   }
+  return order;
 }
 
 
 exports.page_rank = page_rank;
+exports.rank_order = rank_order;

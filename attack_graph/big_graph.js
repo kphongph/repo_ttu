@@ -1,7 +1,6 @@
 function add_link(graph,src,dst_list) {
   for(var i=0;i<dst_list.length;i++) {
-    graph[src][dst_list[i]] = 1;
-    /*
+    // graph[src][dst_list[i]] = 1;
     var r=Math.random();
     if(r<0.3) {
       graph[src][dst_list[i]] = 0.1;
@@ -12,7 +11,6 @@ function add_link(graph,src,dst_list) {
         graph[src][dst_list[i]] = 0.7;
       }
     } 
-    */
   }
 }
 
@@ -112,6 +110,17 @@ var create_graph = function() {
   m_link(graph,62,62,1.0);
   m_link(graph,63,63,1.0);
   m_link(graph,64,64,1.0);
+
+  // for weigth
+  m_link(graph,44,59,1.0);
+  m_link(graph,44,60,1.0);
+  m_link(graph,45,59,1.0);
+  m_link(graph,45,60,1.0);
+  m_link(graph,46,59,1.0);
+  m_link(graph,46,60,1.0);
+  m_link(graph,47,59,1.0);
+  m_link(graph,47,60,1.0);
+
 
   return graph;
 }
