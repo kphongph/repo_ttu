@@ -1,4 +1,4 @@
-var page_rank_d = 0.85;
+var page_rank_d = 1;
 var page_rank_diff = 0.00001;
 
 var page_rank = function (graph) {
@@ -14,6 +14,7 @@ var page_rank = function (graph) {
     }
     graph_sum.push(tmp);
     graph_d.push(page_rank_d);
+    // console.log(tmp);
   }
   var diff = 1.0;
   while (diff > page_rank_diff) {
@@ -43,10 +44,12 @@ var page_rank = function (graph) {
     // console.log(iteration+'\t'+diff.toFixed(5));
   }
 
+  /*
   var sum_rank = 0.0;
   for(var i=0;i<rank_value.length;i++) {
     sum_rank += rank_value[i];
   }
+  */
 
   // console.log(sum_rank);
   // console.log(iteration);

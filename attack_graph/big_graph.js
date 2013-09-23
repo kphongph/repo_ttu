@@ -83,6 +83,7 @@ var create_graph = function() {
   add_link(graph,59,[63]);
   add_link(graph,60,[64]);
 
+  /*
   add_link(graph,48,[48]);
   add_link(graph,49,[49]);
   add_link(graph,50,[50]);
@@ -96,7 +97,9 @@ var create_graph = function() {
   add_link(graph,62,[62]);
   add_link(graph,63,[63]);
   add_link(graph,64,[64]);
+  */
 
+  /*
   m_link(graph,48,48,1.0);
   m_link(graph,49,49,1.0);
   m_link(graph,50,50,1.0);
@@ -110,6 +113,7 @@ var create_graph = function() {
   m_link(graph,62,62,1.0);
   m_link(graph,63,63,1.0);
   m_link(graph,64,64,1.0);
+  */
 
   // for weigth
   m_link(graph,44,59,1.0);

@@ -19,7 +19,11 @@ var modify_graph = function(graph) {
           sum+=(1-graph[i][j]);
         }
      }
-     new_graph[i][i] = sum;
+     if(sum==0) {
+       new_graph[i][0] = 1;  // no outgoing link
+     } else {
+       new_graph[i][0] = sum;
+     }
   }
   return new_graph;
 }
@@ -61,6 +65,11 @@ var node_size = parseInt(process.argv[2])||2;
 var graph = big_graph.create_graph();
 var n_graph = modify_graph(graph);
 var rank_value =  ranking.page_rank(n_graph);
+var sum_r = 0.0;
+for(var i=0;i<rank_value.length;i++) {
+   sum_r+=rank_value[i];
+}
+// console.log(sum_r);
 var r_order = ranking.rank_order(rank_value);
 // console.log(r_order);
 console.log(util.draw_graph(graph,r_order));
