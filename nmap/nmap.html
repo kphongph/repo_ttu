@@ -1,0 +1,65 @@
+<h1>NMAP (Network Mapper)</h1>
+
+<h2>Port Scan Technique</h2>
+
+<h3>TCP SYN</h3>
+
+<p>This scanning technque starts by sending TCP SYN to destination host 
+with specific port. If the port is <em>opened</em>, the destination host will 
+reply back with ACK otherwise RST will be replied by destination host 
+if the port is closed. The scanner will send RST back to the server to 
+discard the connection. By doing this step, we leave no track because
+the TCP connection is not completed. We usually call this scenario as
+<em>half-opening</em> scanning.</p>
+
+<p><code>nmap [Scan Types] [Options] {target specification}</code></p>
+
+<p>Type of scanning </p>
+
+<ul>
+<li><code>sS</code> TCP SYN Scan</li>
+<li><code>sT</code> TCP Connect Scan</li>
+<li><code>sF</code> FIN Scan</li>
+<li><code>sA</code> ACK Scan</li>
+<li><code>sW</code> Window Scan</li>
+</ul>
+
+<p>Port Specification 
+-p Scan for TCP ports
+-sU Scan for UDP ports
+-r Do a sequential port scan (don't randomise the ports)
+-F Fast scan, scans fewer ports</p>
+
+<p>OS/Service/Version Detection
+-O Detect operating system
+-sV Version detection</p>
+
+<p>Host Discovery
+-sL List targets
+-PN Do a 'ping scan'</p>
+
+<p>Timing/Performance
+-T(0-5) 5 is the fastest, 0 is the slowest
+-F Fast scan, scans fewer ports</p>
+
+<p>Firewall/IDS Evasion and Spoofing
+-D IP<em>Addresses Decoy hosts
+-g port</em>number Spoof source port
+-f Fragment packets</p>
+
+<p>Output
+-oN Normal output
+-oG Grepable output
+-oX XML output
+-oA Output in all three formats</p>
+
+<p>Target Specification
+IP address - 192.169.100.1, 192.168.100.2
+List of IP addresses 192.168.100.1-50
+CIDR 192.168.100.1/24
+-iL filename Read the list of IP addresses from the file</p>
+
+<p>Firewall scanning details
+-Blocked (closed port) = most of the firewall ports should be in a closed state
+-Filtered = A few ports may be filtered to restrict access of the running services to a few IP addresses
+-Allowed (open port) = very few ports should be in a open state.</p>
