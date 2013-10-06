@@ -1,5 +1,6 @@
 digraph G {
-  node [shape=circle,width=.25,height=.25,fixedsize=true,fontsize=10];
+  node [shape=circle,width=0.35,height=0.35,fixedsize=true,
+    fontname="Palatino",fontsize=15];
   edge [arrowhead="vee",arrowsize=.5];
   s0 [label="1"];
   s1 [label="6"];
