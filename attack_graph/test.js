@@ -73,6 +73,10 @@ var metha_m_weight = function(graph) {
         in_node[j]+=1;
       }
     }
+    // modify in graph 
+    if(sum[i]==0) {
+      graph[i][i]=0.3;
+    }
   }
 
   for(var i=0;i<in_node.length;i++) {
@@ -115,6 +119,11 @@ var g=[
 var m=metha_m_weight(g);
 //console.log(m);
 var rank_value=ranking.power_method(m,0.00001);
+var sum=0;
+for(var i=0;i<rank_value.length;i++) {
+  sum+=rank_value[i];
+}
+//console.log(sum);
 var r_order = ranking.rank_order(rank_value);
 console.log(util.draw_graph(g,r_order));
 

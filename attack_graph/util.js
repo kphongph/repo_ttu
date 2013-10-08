@@ -1,6 +1,7 @@
 function draw_graph(graph,rank) {
   var str = 'digraph G {\n';
-  str+= '  node [shape=circle,width=.25,height=.25,fixedsize=true,fontsize=10];\n';
+  str+= '  node [shape=circle,width=.35,height=.35,fixedsize=true,\n';
+  str+= '     fontname=\"Palatino\", fontsize=15];\n';
   str+= '  edge [arrowhead="vee",arrowsize=.5];\n';
   for(var i=0;i<graph.length;i++) {
    for(var j=0;j<graph[i].length;j++) {

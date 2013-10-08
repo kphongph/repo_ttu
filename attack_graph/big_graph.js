@@ -178,8 +178,8 @@ var demo_graph = function(graph) {
   m_link(graph,12,25,0.7);
  
   m_link(graph,13,27,0.7);
-  m_link(graph,13,27,0.3);
-  m_link(graph,13,27,0.7);
+  m_link(graph,13,28,0.3);
+  m_link(graph,13,31,0.7);
 
   m_link(graph,14,27,0.3);
   m_link(graph,14,28,0.1);
@@ -189,7 +189,7 @@ var demo_graph = function(graph) {
   m_link(graph,15,30,0.1);
   m_link(graph,15,34,0.3);
   m_link(graph,15,35,0.3);
-  m_link(graph,15,35,0.1);
+  m_link(graph,15,36,0.1);
 
   m_link(graph,16,29,0.1);
   m_link(graph,16,30,0.1);
