@@ -1,6 +1,32 @@
 var page_rank_d = 1;
 var page_rank_diff = 0.00001;
 
+var power_method = function(m, con) {
+  var rank_value = [];
+  for (var i=0;i<m.length;i++) {
+    rank_value.push(1.0/m.length);
+  }
+  var diff = 1.0;
+  while (diff > con) {
+    var new_rank_value = [];
+    for (var i=0;i<rank_value.length;i++) {
+      new_rank_value.push(0.0);
+    }
+    for(var i=0;i<rank_value.length;i++) {
+      for(var j=0;j<rank_value.length;j++) {
+        new_rank_value[i] += m[j][i]*rank_value[j];
+      }
+    }
+    var diff=0;
+    for (var i=0;i<rank_value.length;i++) {
+      diff+=Math.abs(rank_value[i]-new_rank_value[i]);
+      rank_value[i]=new_rank_value[i];
+    }
+//    console.log(diff);
+  }
+  return rank_value;
+}
+
 var page_rank = function (graph) {
   var rank_value = [];
   var graph_sum = [];
@@ -91,3 +117,4 @@ var rank_order = function(rank_value) {
 
 exports.page_rank = page_rank;
 exports.rank_order = rank_order;
+exports.power_method = power_method;

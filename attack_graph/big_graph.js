@@ -116,6 +116,7 @@ var create_graph = function() {
   */
 
   // for weigth
+  /*
   m_link(graph,44,59,1.0);
   m_link(graph,44,60,1.0);
   m_link(graph,45,59,1.0);
@@ -124,10 +125,199 @@ var create_graph = function() {
   m_link(graph,46,60,1.0);
   m_link(graph,47,59,1.0);
   m_link(graph,47,60,1.0);
+  */
 
+  return graph;
+}
 
+var demo_graph = function(graph) {
+  m_link(graph,0,1,0.3);
+  m_link(graph,0,2,0.7);
+  m_link(graph,0,3,0.3);
+
+  m_link(graph,1,4,0.1);
+  m_link(graph,1,5,0.7);
+  m_link(graph,1,8,0.3);
+
+  m_link(graph,2,6,0.7);
+  m_link(graph,2,7,0.3);
+  m_link(graph,2,10,0.7);
+
+  m_link(graph,3,9,0.3);
+  m_link(graph,3,11,0.1);
+  m_link(graph,3,12,0.7);
+
+  m_link(graph,4,13,0.3);
+  m_link(graph,4,14,0.1);
+  m_link(graph,4,15,0.1);
+  m_link(graph,4,16,0.1);
+  m_link(graph,4,18,0.1);
+
+  m_link(graph,5,17,0.3);
+  m_link(graph,5,20,0.3);
+  m_link(graph,5,22,0.3);
+
+  m_link(graph,6,17,0.3);
+  m_link(graph,6,20,0.3);
+  m_link(graph,6,22,0.3);
+
+  m_link(graph,7,21,0.3);
+
+  m_link(graph,8,19,0.3);
+  m_link(graph,8,23,0.3);
+  m_link(graph,8,24,0.7);
+  m_link(graph,8,26,0.3);
+
+  m_link(graph,9,19,0.7);
+  m_link(graph,9,23,0.3);
+  m_link(graph,9,24,0.7);
+  m_link(graph,9,26,0.7);
+
+  m_link(graph,10,25,0.1);
+  m_link(graph,11,25,0.3);
+  m_link(graph,12,25,0.7);
+ 
+  m_link(graph,13,27,0.7);
+  m_link(graph,13,27,0.3);
+  m_link(graph,13,27,0.7);
+
+  m_link(graph,14,27,0.3);
+  m_link(graph,14,28,0.1);
+  m_link(graph,14,31,0.1);
+
+  m_link(graph,15,29,0.3);
+  m_link(graph,15,30,0.1);
+  m_link(graph,15,34,0.3);
+  m_link(graph,15,35,0.3);
+  m_link(graph,15,35,0.1);
+
+  m_link(graph,16,29,0.1);
+  m_link(graph,16,30,0.1);
+  m_link(graph,16,34,0.3);
+  m_link(graph,16,35,0.1);
+  m_link(graph,16,36,0.7);
+
+  m_link(graph,17,29,0.1);
+  m_link(graph,17,30,0.7);
+  m_link(graph,17,34,0.1);
+  m_link(graph,17,35,0.3);
+  m_link(graph,17,36,0.1);
+
+  m_link(graph,18,32,0.3);
+  m_link(graph,18,33,0.3);
+  m_link(graph,18,37,0.1);
+  m_link(graph,18,38,0.7);
+  m_link(graph,18,39,0.1);
+
+  m_link(graph,19,33,0.7);
+  m_link(graph,19,32,0.3);
+  m_link(graph,19,38,0.3);
+  m_link(graph,19,37,0.1);
+  m_link(graph,19,39,0.3);
+
+  m_link(graph,20,40,0.7);
+  m_link(graph,20,41,0.1);
+
+  m_link(graph,21,40,0.7);
+  m_link(graph,21,41,0.7);
+
+  m_link(graph,22,41,0.7);
+  m_link(graph,22,44,0.7);
+
+  m_link(graph,23,41,0.7);
+  m_link(graph,23,44,0.3);
+
+  m_link(graph,24,41,0.1);
+  m_link(graph,24,44,0.7);
+
+  m_link(graph,25,41,0.1);
+  m_link(graph,25,44,0.3);
+
+  m_link(graph,26,47,0.1);
+  m_link(graph,26,45,0.1);
+  m_link(graph,26,46,0.3);
+  m_link(graph,26,42,0.7);
+  m_link(graph,26,43,0.3);
+
+  m_link(graph,27,48,0.3);
+  m_link(graph,27,49,0.3);
+  m_link(graph,27,50,0.7);
+
+  m_link(graph,28,48,0.1);
+  m_link(graph,28,49,0.7);
+  m_link(graph,28,50,0.7);
+
+  m_link(graph,29,48,0.3);
+  m_link(graph,29,49,0.3);
+  m_link(graph,29,50,0.7);
+
+  m_link(graph,30,50,0.3);
+  m_link(graph,30,48,0.7);
+  m_link(graph,30,49,0.1);
+
+  m_link(graph,31,52,0.7);
+  m_link(graph,31,53,0.7);
+  m_link(graph,31,51,0.3);
+
+  m_link(graph,32,51,0.3);
+  m_link(graph,32,52,0.3);
+  m_link(graph,32,53,0.1);
+
+  m_link(graph,33,52,0.7);
+  m_link(graph,33,53,0.1);
+  m_link(graph,33,51,0.7);
+
+  m_link(graph,34,54,0.3);
+  m_link(graph,34,55,0.3);
+
+  m_link(graph,35,54,0.3);
+  m_link(graph,35,55,0.7);
+
+  m_link(graph,36,54,0.7);
+  m_link(graph,36,55,0.1);
+
+  m_link(graph,37,54,0.7);
+  m_link(graph,37,55,0.1);
+
+  m_link(graph,38,54,0.3);
+  m_link(graph,38,55,0.1);
+
+  m_link(graph,39,54,0.7);
+  m_link(graph,39,55,0.3);
+
+  m_link(graph,40,54,0.1);
+  m_link(graph,40,55,0.3);
+
+  m_link(graph,41,54,0.3);
+  m_link(graph,41,55,0.1);
+
+  m_link(graph,42,58,0.3);
+  m_link(graph,42,56,0.1);
+  m_link(graph,42,57,0.1);
+
+  m_link(graph,43,58,0.3);
+  m_link(graph,43,56,0.7);
+  m_link(graph,43,57,0.3);
+
+  m_link(graph,44,59,0.3);
+  m_link(graph,44,60,0.3);
+
+  m_link(graph,45,59,0.3);
+  m_link(graph,45,60,0.3);
+
+  m_link(graph,46,59,0.3);
+  m_link(graph,46,60,0.3);
+
+  m_link(graph,47,59,0.3);
+  m_link(graph,47,60,0.3);
+
+  m_link(graph,54,61,0.1);
+  m_link(graph,55,62,0.7);
+  m_link(graph,59,63,0.7);
+  m_link(graph,60,64,0.3);
   return graph;
 }
 
 
 exports.create_graph = create_graph;
+exports.demo_graph = demo_graph;

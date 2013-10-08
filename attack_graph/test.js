@@ -54,23 +54,82 @@ var compute_convert = function(node_size) {
   ranking.page_rank(n_graph);
 }
 
+var metha_m_weight = function(graph) {
+  var m = [];
+  var sum = [];
+  var init_node = [];
+  var in_node = [];
+  for(var i=0;i<graph.length;i++) {
+    sum.push(0);
+    in_node.push(0);
+  }
+
+  for(var i=0;i<graph.length;i++) {
+    m.push([]);
+    for(var j=0;j<graph.length;j++) {
+      sum[i]+=graph[i][j];
+      m[i].push(0);
+      if(graph[i][j]!=0) {
+        in_node[j]+=1;
+      }
+    }
+  }
+
+  for(var i=0;i<in_node.length;i++) {
+    if(in_node[i]==0) {
+      init_node.push(i);
+    }
+  }
+  for(var i=0;i<graph.length;i++) {
+    for(var j=0;j<graph.length;j++) {
+      if(sum[j]!=0) {
+        m[j][i]=0.85*graph[j][i]/sum[j];
+      } else {
+        m[j][j]=0.85;
+      }
+    }
+    for(var k=0;k<init_node.length;k++) {
+     m[i][init_node[k]]+=0.15/(init_node.length);
+    }
+  }
+  return m;
+}
 
 
-var node_size = parseInt(process.argv[2])||2;
+// var node_size = parseInt(process.argv[2])||2;
 // var data_size = parseInt(process.argv[3])||10;
 // compute_r_time(node_size,data_size);
 // compute_convert(node_size);
 
 
 var graph = big_graph.create_graph();
+var g=big_graph.demo_graph(graph);
+
+/*
+var g=[
+ [0,1,1],
+ [0,0,1],
+ [0,1,0],
+];
+*/
+var m=metha_m_weight(g);
+//console.log(m);
+var rank_value=ranking.power_method(m,0.00001);
+var r_order = ranking.rank_order(rank_value);
+console.log(util.draw_graph(g,r_order));
+
+
+
+/*
 var n_graph = modify_graph(graph);
 var rank_value =  ranking.page_rank(n_graph);
 var sum_r = 0.0;
 for(var i=0;i<rank_value.length;i++) {
    sum_r+=rank_value[i];
 }
+*/
 // console.log(sum_r);
-var r_order = ranking.rank_order(rank_value);
+//var r_order = ranking.rank_order(rank_value);
 // console.log(r_order);
-console.log(util.draw_graph(graph,r_order));
+//console.log(util.draw_graph(graph,r_order));
 
