@@ -1,0 +1,6 @@
+digraph G {
+  node [shape=circle,width=0.35,height=0.35,fixedsize=true,
+    fontname="Palatino",fontsize=15];
+  edge [arrowhead="vee",arrowsize=.5];
+  s00 [label="",shape=box,color=red, style=filled, fillcolor=red];
+}
